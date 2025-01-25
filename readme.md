@@ -63,5 +63,5 @@ PostgreSQL
 
 ## Contact
 
-For any inquiries, please contact [your email or GitHub profile link].
+For any inquiries, please contact aniklal2020@gmail.com.
 
