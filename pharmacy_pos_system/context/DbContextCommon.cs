@@ -12,7 +12,7 @@ namespace pharmacy_pos_system.context
         {
             public DbSet<User> Users { get; set; }
 
-            //public DbSet<Medicine> Medicines { get; set; }   
+            public DbSet<Medicine> Medicines { get; set; }   
 
 
        
@@ -27,7 +27,7 @@ namespace pharmacy_pos_system.context
              
                 modelBuilder.ApplyConfiguration(new UserConfig());
 
-               // modelBuilder.ApplyConfiguration(new MedicineConfig());
+                modelBuilder.ApplyConfiguration(new MedicineConfig());
 
                 base.OnModelCreating(modelBuilder);
             }

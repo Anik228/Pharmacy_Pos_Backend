@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using pharmacy_pos_system.context;
@@ -11,9 +12,11 @@ using pharmacy_pos_system.context;
 namespace pharmacy_pos_system.Migrations
 {
     [DbContext(typeof(DbContextCommon))]
-    partial class DbContextCommonModelSnapshot : ModelSnapshot
+    [Migration("20250125050606_MedicineTable")]
+    partial class MedicineTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

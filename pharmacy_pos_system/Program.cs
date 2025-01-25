@@ -7,6 +7,8 @@ using pharmacy_pos_system.module.user.service;
 using pharmacy_pos_system.context;
 using pharmacy_pos_system.module.user.model;
 using System.Text;
+using pharmacy_pos_system.module.medicine.service;
+using pharmacy_pos_system.module.medicine.repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,11 +21,15 @@ builder.Services.AddDbContext<DbContextCommon>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSqlConnection")));
 
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+
+builder.Services.AddScoped<IMedicineService, MedicineService>();
 builder.Services.AddScoped<IMedicineRepository, MedicineRepository>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-builder.Services.AddScoped<PasswordHasher<medicine>>();
+builder.Services.AddScoped<PasswordHasher<User>>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

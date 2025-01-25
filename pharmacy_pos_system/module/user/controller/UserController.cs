@@ -84,6 +84,9 @@ namespace pharmacy_pos_system.module.user.controller
         [HttpGet("user")]
         [Authorize]
         [Authorize(Roles = "admin")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
         public async Task<IActionResult> GetAllUsers()
         {
             try
