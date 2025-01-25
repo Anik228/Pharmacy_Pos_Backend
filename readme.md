@@ -51,7 +51,7 @@ PostgreSQL is used as the database.
 
 Ensure PostgreSQL is installed and configured before running the API
 
-Technologies Used
+## Technologies Used
 
 ASP.NET Core Web API
 
