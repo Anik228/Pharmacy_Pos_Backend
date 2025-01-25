@@ -73,8 +73,6 @@ namespace pharmacy_pos_system.module.medicine.service
                 return false;
             }
 
-            //registerDto.Password = hashedPassword;
-
             existingMedicine.Name = medicineDto.Name;
             existingMedicine.Brand = medicineDto.Brand;
             existingMedicine.Description = medicineDto.Description;
@@ -89,6 +87,8 @@ namespace pharmacy_pos_system.module.medicine.service
         }
       
         public Task<Medicine> GetMedicineByIdAsync(int id) => _repository.GetMedicineByIdAsync(id);
+
+        public Task<Medicine> GetMedicineByNameAsync(string name) => _repository.GetMedicineByNameAsync(name);
 
     }
 }

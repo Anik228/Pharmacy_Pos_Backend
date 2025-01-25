@@ -12,6 +12,8 @@ namespace pharmacy_pos_system.module.user.repository
             Task<User> GetUserByIdAsync(int id);
             Task UpdateUserAsync(User user);
 
+            
+
     }
     
 }

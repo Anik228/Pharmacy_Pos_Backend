@@ -106,8 +106,6 @@ namespace pharmacy_pos_system.module.user.service
 
             var hashedPassword = BCrypt.Net.BCrypt.HashPassword(userDto.Password);
 
-            //registerDto.Password = hashedPassword;
-
             existingUser.Name = userDto.Name;
             existingUser.Email = userDto.Email;
             existingUser.Password = hashedPassword;
@@ -126,10 +124,10 @@ namespace pharmacy_pos_system.module.user.service
 
             if (user == null)
             {
-                return false; // Ensure this path returns a value
+                return false; 
             }
 
-            user.Password = newPassword; // The password should already be hashed before passing it here.
+            user.Password = newPassword; 
 
             await _repository.UpdateUserAsync(user);
 

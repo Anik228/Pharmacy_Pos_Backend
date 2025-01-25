@@ -16,7 +16,9 @@ namespace pharmacy_pos_system.module.medicine.service
 
             Task<Medicine> GetMedicineByIdAsync(int id);
 
-           
+            Task<Medicine> GetMedicineByNameAsync(string name);
+
+
 
     }
 

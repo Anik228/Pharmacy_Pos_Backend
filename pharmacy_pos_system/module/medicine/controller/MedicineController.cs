@@ -116,5 +116,13 @@ namespace pharmacy_pos_system.module.medicine.controller
         [ProducesResponseType(404)]
         public Task<Medicine> GetTask(int id) => _medicineService.GetMedicineByIdAsync(id);
 
+        [HttpGet("find-a-medicine-by-name/{name}")]
+        [Authorize]
+        [Authorize(Roles = "admin,user")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public Task<Medicine> GetTaskByname(string name) => _medicineService.GetMedicineByNameAsync(name);
+
     }
 }

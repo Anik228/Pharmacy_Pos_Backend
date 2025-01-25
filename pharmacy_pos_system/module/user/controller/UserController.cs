@@ -183,7 +183,6 @@ namespace pharmacy_pos_system.module.user.controller
                 });
             }
 
-            // Verify old password before updating
             bool isOldPasswordValid = BCrypt.Net.BCrypt.Verify(updatePasswordDto.OldPassword, user.Password);
             if (!isOldPasswordValid)
             {
@@ -194,7 +193,6 @@ namespace pharmacy_pos_system.module.user.controller
                 });
             }
 
-            // Hash the new password
             user.Password = BCrypt.Net.BCrypt.HashPassword(updatePasswordDto.NewPassword);
 
             bool result = await _loginService.UpdateUserPasswordAsync(id, user.Password);

@@ -9,6 +9,8 @@ namespace pharmacy_pos_system.module.medicine.repository
             Task<List<Medicine>> GetAllAsync();
             Task DeleteMedicineAsync(int id);
             Task<Medicine> GetMedicineByIdAsync(int id);
+
+            Task<Medicine> GetMedicineByNameAsync(string name);
             Task UpdateMedicineAsync(Medicine medicine);
 
     }

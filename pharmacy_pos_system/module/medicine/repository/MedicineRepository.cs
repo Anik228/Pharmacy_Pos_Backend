@@ -41,6 +41,12 @@ namespace pharmacy_pos_system.module.medicine.repository
 
             public async Task<Medicine> GetMedicineByIdAsync(int id) => await _context.Medicines.FindAsync(id);
 
+        public async Task<Medicine> GetMedicineByNameAsync(string name)
+        {
+            return await _context.Medicines.FirstOrDefaultAsync(m => m.Name == name);
+        }
+
+
     }
-    }
+}
 
