@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using pharmacy_pos_system.module.user.model;
 using pharmacy_pos_system.module.user.service;
-
+using System.Net.Http;
+using System.Net.Http.Json;
 
 namespace pharmacy_pos_system.module.user.controller
 {
@@ -12,10 +13,12 @@ namespace pharmacy_pos_system.module.user.controller
     public class UserController : ControllerBase
     {
         private readonly IUserService _loginService;
+        private readonly IConfiguration _configuration;
 
-        public UserController(IUserService loginService)
+        public UserController(IUserService loginService, IConfiguration configuration)
         {
             _loginService = loginService;
+            _configuration = configuration;
         }
 
 
@@ -211,6 +214,64 @@ namespace pharmacy_pos_system.module.user.controller
                 status = 200,
                 message = "Password updated successfully."
             });
+        }
+
+        [HttpPost("google-login")]
+        public async Task<IActionResult> GoogleLogin([FromBody] GoogleLoginDto googleLoginDto)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(googleLoginDto.IdToken))
+                {
+                    return BadRequest(new { Message = "ID token is required" });
+                }
+
+                // Log the first and last few characters of the token for debugging
+                var tokenPreview = googleLoginDto.IdToken.Length > 50 
+                    ? $"{googleLoginDto.IdToken.Substring(0, 20)}...{googleLoginDto.IdToken.Substring(googleLoginDto.IdToken.Length - 20)}"
+                    : googleLoginDto.IdToken;
+                Console.WriteLine($"Received Google token: {tokenPreview}");
+
+                var token = await _loginService.LoginWithGoogleAsync(googleLoginDto);
+                return Ok(new { Token = token });
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                Console.WriteLine($"Google login failed: {ex.Message}");
+                return Unauthorized(new { Message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Unexpected error in Google login: {ex.Message}");
+                return BadRequest(new { Message = ex.Message });
+            }
+        }
+
+        [HttpGet("google-callback")]
+        public async Task<IActionResult> GoogleCallback([FromQuery] GoogleCallbackDto callbackDto)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(callbackDto.Error))
+                {
+                    return BadRequest(new { Message = "Google authentication failed" });
+                }
+
+                if (string.IsNullOrEmpty(callbackDto.Code))
+                {
+                    return BadRequest(new { Message = "Authorization code is missing" });
+                }
+
+                var token = await _loginService.HandleGoogleCallbackAsync(callbackDto.Code);
+                
+                // You might want to redirect to a frontend URL with the token
+                var frontendUrl = _configuration["GoogleAuth:FrontendRedirectUrl"];
+                return Redirect($"{frontendUrl}?token={token}");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Message = ex.Message });
+            }
         }
 
     }

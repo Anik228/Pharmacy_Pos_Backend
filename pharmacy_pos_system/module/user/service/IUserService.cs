@@ -18,6 +18,10 @@ namespace pharmacy_pos_system.module.user.service
 
             Task<bool> UpdateUserPasswordAsync(int id, string newPassword);
 
+            Task<string> LoginWithGoogleAsync(GoogleLoginDto googleLoginDto);
+
+            Task<string> HandleGoogleCallbackAsync(string code);
+
     }
 
 }

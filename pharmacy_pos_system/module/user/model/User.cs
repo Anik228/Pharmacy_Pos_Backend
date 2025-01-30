@@ -9,5 +9,6 @@
         public string Role { get; set; }
         public string Phone { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public bool IsActive { get; set; }
     }
 }

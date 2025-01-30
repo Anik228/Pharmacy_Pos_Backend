@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\anik_VAS\\vas_projects\\dot_net_project\\pharmacy_pos_system\\pharmacy_pos_system\\pharmacy_pos_system.csproj": {}
+    "D:\\anik_VAS\\vas_projects\\dot_net_project\\pharmacy_pos_system - Copy\\pharmacy_pos_system\\pharmacy_pos_system.csproj": {}
   },
   "projects": {
-    "D:\\anik_VAS\\vas_projects\\dot_net_project\\pharmacy_pos_system\\pharmacy_pos_system\\pharmacy_pos_system.csproj": {
+    "D:\\anik_VAS\\vas_projects\\dot_net_project\\pharmacy_pos_system - Copy\\pharmacy_pos_system\\pharmacy_pos_system.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\anik_VAS\\vas_projects\\dot_net_project\\pharmacy_pos_system\\pharmacy_pos_system\\pharmacy_pos_system.csproj",
+        "projectUniqueName": "D:\\anik_VAS\\vas_projects\\dot_net_project\\pharmacy_pos_system - Copy\\pharmacy_pos_system\\pharmacy_pos_system.csproj",
         "projectName": "pharmacy_pos_system",
-        "projectPath": "D:\\anik_VAS\\vas_projects\\dot_net_project\\pharmacy_pos_system\\pharmacy_pos_system\\pharmacy_pos_system.csproj",
+        "projectPath": "D:\\anik_VAS\\vas_projects\\dot_net_project\\pharmacy_pos_system - Copy\\pharmacy_pos_system\\pharmacy_pos_system.csproj",
         "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "D:\\anik_VAS\\vas_projects\\dot_net_project\\pharmacy_pos_system\\pharmacy_pos_system\\obj\\",
+        "outputPath": "D:\\anik_VAS\\vas_projects\\dot_net_project\\pharmacy_pos_system - Copy\\pharmacy_pos_system\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -52,6 +52,10 @@
             "BCrypt.Net-Next": {
               "target": "Package",
               "version": "[4.0.3, )"
+            },
+            "Google.Apis.Auth": {
+              "target": "Package",
+              "version": "[1.67.0, )"
             },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",

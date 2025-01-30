@@ -1,0 +1,53 @@
+@page
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login with Google</title>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+    <div id="g_id_onload"
+         data-client_id="318625692232-0c6h22s2m9qlmqsepta1682isq18m9tt.apps.googleusercontent.com"
+         data-callback="handleCredentialResponse"
+         data-auto_prompt="false">
+    </div>
+    <div class="g_id_signin"
+         data-type="standard"
+         data-size="large"
+         data-theme="outline"
+         data-text="sign_in_with"
+         data-shape="rectangular"
+         data-logo_alignment="left">
+    </div>
+
+    <script>
+        function handleCredentialResponse(response) {
+            // Send the token to your backend
+            fetch('https://localhost:5001/api/User/google-login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    idToken: response.credential,
+                    email: response.email,
+                    name: response.name
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.token) {
+                    // Store the token
+                    localStorage.setItem('jwt_token', data.token);
+                    // Redirect to dashboard or home page
+                    window.location.href = '/dashboard';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Login failed. Please try again.');
+            });
+        }
+    </script>
+</body>
+</html> 
