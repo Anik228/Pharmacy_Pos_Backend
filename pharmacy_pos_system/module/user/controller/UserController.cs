@@ -5,6 +5,7 @@ using pharmacy_pos_system.module.user.model;
 using pharmacy_pos_system.module.user.service;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Security.Claims;
 
 namespace pharmacy_pos_system.module.user.controller
 {
@@ -131,8 +132,9 @@ namespace pharmacy_pos_system.module.user.controller
                     message = "Bad Request"
                 });
             }
+            var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
 
-            bool result = await _loginService.UpdateUserAsync(id, user);
+            bool result = await _loginService.UpdateUserAsync(id, user, userRole);
 
             if (!result)
             {
@@ -196,7 +198,7 @@ namespace pharmacy_pos_system.module.user.controller
                 });
             }
 
-            user.Password = BCrypt.Net.BCrypt.HashPassword(updatePasswordDto.NewPassword);
+            user.Password = BCrypt.Net.BCrypt.HashPassword(updatePasswordDto.NewPassword);           
 
             bool result = await _loginService.UpdateUserPasswordAsync(id, user.Password);
 
@@ -267,6 +269,35 @@ namespace pharmacy_pos_system.module.user.controller
                 // You might want to redirect to a frontend URL with the token
                 var frontendUrl = _configuration["GoogleAuth:FrontendRedirectUrl"];
                 return Redirect($"{frontendUrl}?token={token}");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Message = ex.Message });
+            }
+        }
+        [HttpPost("logout")]
+        [Authorize]
+        public async Task<IActionResult> Logout()
+        {
+            try
+            {
+                // Get user ID from claims
+                var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+                if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+                {
+                    return Unauthorized(new { Message = "Invalid user session." });
+                }
+
+                var user = await _loginService.LogoutAsync(userId);
+                
+                // Clear any session data if needed
+                // HttpContext.Session.Clear();
+
+                return Ok(new { Message = "Logged out successfully", User = user.Name });
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized(new { Message = ex.Message });
             }
             catch (Exception ex)
             {
